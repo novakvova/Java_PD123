@@ -1,0 +1,2 @@
+Зробити CRUD категорій на react app.
+Даний додаток має працювати із Java Server App Spring Boot
