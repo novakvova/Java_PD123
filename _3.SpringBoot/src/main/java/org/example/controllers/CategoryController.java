@@ -6,12 +6,11 @@ import org.example.dto.category.CategoryItemDTO;
 import org.example.entities.CategoryEntity;
 import org.example.mappers.CategoryMapper;
 import org.example.repositories.CategoryRepository;
+import org.example.storage.StorageService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,19 +20,21 @@ import java.util.List;
 public class CategoryController {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
+    private final StorageService storageService;
     @GetMapping("/")
     public ResponseEntity<List<CategoryItemDTO>> index() {
         var result = categoryMapper.listCategoriesToItemDTO(categoryRepository.findAll());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/category")
-    public CategoryEntity create(@RequestBody CategoryCreateDTO dto) {
+    @PostMapping(value = "/category", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public CategoryEntity create(@ModelAttribute CategoryCreateDTO dto) {
+        var fileName = storageService.saveMultipartFile(dto.getImage());
         CategoryEntity cat = CategoryEntity
                 .builder()
                 .name(dto.getName())
                 .description(dto.getDescription())
-                .image(dto.getImage())
+                .image(fileName)
                 .build();
         categoryRepository.save(cat);
         return cat;
