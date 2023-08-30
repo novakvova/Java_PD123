@@ -18,7 +18,9 @@ const CategoryListPage = () => {
         <tr key={item.id}>
             <td>{item.id}</td>
             <td>{item.name}</td>
-            <td>{item.image}</td>
+            <td>
+                <img src={`${http_common.getUri()}/uploading/150_${item.image}`} alt={item.name}/>
+            </td>
             <td>{item.description}</td>
             <td>
                 {/*<button onClick={() => setEditingPerson(person)}>Edit</button>*/}

@@ -8,19 +8,33 @@ const CategoryCreatePage = () => {
     const navigate = useNavigate();
     const init: ICategoryCreate = {
         name: "",
-        image: "",
+        image: null,
         description: ""
     };
     const [data, setData] = useState<ICategoryCreate>(init);
 
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement> ) => {
+        const {target} = e;
+        const {files} = target;
+        if(files) {
+            const file = files[0];
+            setData({...data, image: file});
+        }
+        target.value="";
+    }
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        http_common.post("/category", data)
+        http_common.post("/category", data,{
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
             .then(() => {
                 navigate("/");
             })
             .catch(error => {
-                console.error("Error adding person:", error);
+                console.error("Error adding category:", error);
             });
     };
 
@@ -38,10 +52,9 @@ const CategoryCreatePage = () => {
                        value={data.name}
                        onChange={onChangeHandler} />
 
-                <input type="text" placeholder="Image URL"
+                <input type="file" placeholder="Image URL"
                        name={"image"}
-                       value={data.image}
-                       onChange={onChangeHandler} />
+                       onChange={handleFileChange} />
 
                 <input type="text" placeholder="Description"
                        name={"description"}
