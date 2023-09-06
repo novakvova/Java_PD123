@@ -4,6 +4,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import net.coobird.thumbnailator.Thumbnails;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -139,6 +140,37 @@ public class FileSystemStorageService implements StorageService {
                 }
             }
 
+            return randomFileName;
+        } catch (IOException e) {
+            throw new StorageException("Проблема перетворення та збереження base64", e);
+        }
+    }
+
+    @Override
+    public String saveThumbnailator(MultipartFile file) {
+        try {
+            String extension="jpg";
+            String randomFileName = UUID.randomUUID().toString()+"."+extension; //робимо ім'я файліка: унікальне ім'я + розширення
+            int [] imageSize = {32, 150, 300, 600, 1200}; // масив розмірів фотографій
+
+
+            for(int size : imageSize) { // в циклі створюємо фотки кожного розміру
+                String directory= rootLocation.toString() +"/"+size+"_"+randomFileName; //створюємо папку де фотка буде зберігатися
+
+
+                // Convert MultipartFile to BufferedImage
+                BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(file.getBytes()));
+
+                // Resize and convert to WebP format
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                Thumbnails.of(bufferedImage)
+                        .size(size, size)
+                        .outputFormat(extension) // Specify WebP format
+                        .toOutputStream(outputStream);
+                FileOutputStream out = new FileOutputStream(directory);
+                out.write(outputStream.toByteArray()); //байти зберігаємо у фійлову систему на сервері
+                out.close();
+            }
             return randomFileName;
         } catch (IOException e) {
             throw new StorageException("Проблема перетворення та збереження base64", e);

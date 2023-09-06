@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -25,7 +26,7 @@ public class ProductEntity {
     private String description;
 
     @OneToMany(mappedBy = "product")
-    private List<ProductImageEntity> images;
+    private List<ProductImageEntity> images = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name="category_id", nullable = false)
