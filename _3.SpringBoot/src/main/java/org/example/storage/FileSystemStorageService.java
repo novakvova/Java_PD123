@@ -149,7 +149,7 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public String saveThumbnailator(MultipartFile file) {
         try {
-            String extension="jpg";
+            String extension="webp";
             String randomFileName = UUID.randomUUID().toString()+"."+extension; //робимо ім'я файліка: унікальне ім'я + розширення
             int [] imageSize = {32, 150, 300, 600, 1200}; // масив розмірів фотографій
 
