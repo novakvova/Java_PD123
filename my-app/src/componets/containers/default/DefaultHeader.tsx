@@ -18,7 +18,7 @@ const DefaultHeader = () => {
                                     <a className="nav-link active" aria-current="page" href="#">Home</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Link</a>
+                                    <Link className="nav-link" to="/product/create">Додати продукт</Link>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link disabled" aria-disabled="true">Disabled</a>
