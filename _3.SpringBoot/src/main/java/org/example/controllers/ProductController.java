@@ -1,6 +1,7 @@
 package org.example.controllers;
 
 import lombok.AllArgsConstructor;
+import org.example.dto.product.DescriptionImageDTO;
 import org.example.dto.product.ProductCreateDTO;
 import org.example.dto.product.ProductItemDTO;
 import org.example.dto.product.ProductUpdateDTO;
@@ -41,6 +42,12 @@ public class ProductController {
             p.getImages().add(pi);
         }
         return ResponseEntity.ok().body(p);
+    }
+
+    @PostMapping(value = "upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> upload(@ModelAttribute DescriptionImageDTO dto) {
+        String fileName = storageService.saveThumbnailator(dto.getImage());
+        return ResponseEntity.ok().body(fileName);
     }
 
     @PutMapping(value = "{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
