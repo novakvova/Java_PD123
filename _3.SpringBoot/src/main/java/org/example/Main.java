@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.interfaces.SeedService;
 import org.example.storage.StorageProperties;
 import org.example.storage.StorageService;
 import org.springframework.boot.CommandLineRunner;
@@ -16,10 +17,12 @@ public class Main {
     }
 
     @Bean
-    CommandLineRunner init(StorageService storageService) {
+    CommandLineRunner init(StorageService storageService, SeedService seedService) {
         return (args) -> {
             try {
                 storageService.init();
+                seedService.seedRole();
+                seedService.seedUser();
             }
             catch(Exception ex) {
                 System.out.println("-----Хюсто у нас проблеми----"+ ex.getMessage());
