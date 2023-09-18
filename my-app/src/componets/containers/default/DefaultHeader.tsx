@@ -26,7 +26,7 @@ const DefaultHeader = () => {
                             </ul>
                             <ul className={"navbar-nav"}>
                                 <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page" href="#">Вхід</a>
+                                    <Link className="nav-link active" aria-current="page" to="/login">Вхід</Link>
                                 </li>
 
                                 <li className="nav-item">

@@ -4,7 +4,8 @@ import DefaultLayout from "./componets/containers/default/DefaultLayout.tsx";
 import {Route, Routes} from "react-router-dom";
 import CategoryCreatePage from "./componets/category/create/CategoryCreatePage.tsx";
 import CategoryEditPage from "./componets/category/edit/CategoryEditPage.tsx";
-import ProductCreatePAge from "./componets/product/create/ProductCreatePage.tsx";
+import ProductCreatePage from "./componets/product/create/ProductCreatePage.tsx";
+import LoginPage from "./componets/auth/login/LoginPage.tsx";
 function App() {
 
 
@@ -16,8 +17,10 @@ function App() {
                 <Route path={"create"} element={<CategoryCreatePage />} />
                 <Route path="category/edit/:id" element={<CategoryEditPage />} />
                 <Route path={"product"}>
-                    <Route path="create" element={<ProductCreatePAge />} />
+                    <Route path="create" element={<ProductCreatePage />} />
                 </Route>
+
+                <Route path={"login"} element={<LoginPage/>}/>
             </Route>
         </Routes>
     </>
