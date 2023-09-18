@@ -1,5 +1,7 @@
 package org.example.controllers;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import lombok.AllArgsConstructor;
 import org.example.dto.category.CategoryCreateDTO;
 import org.example.dto.category.CategoryItemDTO;
@@ -19,17 +21,19 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("api/category")
+@SecurityRequirement(name="my-app")
 public class CategoryController {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
     private final StorageService storageService;
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<List<CategoryItemDTO>> index() {
         var result = categoryMapper.listCategoriesToItemDTO(categoryRepository.findAll());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/category", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CategoryEntity create(@ModelAttribute CategoryCreateDTO dto) {
         var fileName = storageService.saveMultipartFile(dto.getImage());
         CategoryEntity cat = CategoryEntity
@@ -42,7 +46,7 @@ public class CategoryController {
         return cat;
     }
 
-    @GetMapping("/category/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<CategoryItemDTO> getCategoryById(@PathVariable int id) {
         Optional<CategoryEntity> categoryOptional = categoryRepository.findById(id);
         return categoryOptional
@@ -50,7 +54,7 @@ public class CategoryController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping(value = "/category/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<CategoryItemDTO> updateCategory(@PathVariable int id, @ModelAttribute CategoryUpdateDTO dto) {
         Optional<CategoryEntity> categoryOptional = categoryRepository.findById(id);
         if (categoryOptional.get().getImage() != null && !dto.getImage().isEmpty()) {
@@ -66,7 +70,7 @@ public class CategoryController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/category/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable int id) {
         Optional<CategoryEntity> categoryOptional = categoryRepository.findById(id);
         if (categoryOptional.isPresent()) {
