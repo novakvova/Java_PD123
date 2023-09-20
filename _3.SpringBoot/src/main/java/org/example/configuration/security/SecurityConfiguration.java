@@ -26,6 +26,7 @@ public class SecurityConfiguration {
         http
                 .cors().and().csrf().disable()
                 .authorizeHttpRequests()
+                .requestMatchers("/").permitAll()
                 .requestMatchers("/api/account/**").permitAll()
                 .requestMatchers("/files/**").permitAll()
                 .requestMatchers("/static/**").permitAll()
@@ -35,9 +36,6 @@ public class SecurityConfiguration {
                 .requestMatchers("/rest-api-docs/**").permitAll()
                 .requestMatchers("/swagger-ui/**").permitAll()
                 .requestMatchers("/api/category/**").hasAuthority(Roles.Admin)
-//                .requestMatchers(HttpMethod.POST,"/api/categories").hasAuthority(Roles.Admin)
-//                .requestMatchers(HttpMethod.GET,"/api/products").permitAll()
-//                .requestMatchers("/api/products/**").hasAuthority(Roles.Admin)
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

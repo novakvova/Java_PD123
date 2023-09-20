@@ -15,6 +15,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.RequiredArgsConstructor;
 import org.example.entities.UserEntity;
 import org.example.repositories.UserRoleRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import static java.lang.String.format;
@@ -24,7 +25,8 @@ import static java.lang.String.format;
 public class JwtService {
 
     private final UserRoleRepository userRoleRepository;
-    private final String jwtSecret = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";  //ключ, яким ми шифруємо (будь-які букви чи цифри)
+    @Value("${it.step.app.jwtSecret}")
+    private String jwtSecret;  //ключ, яким ми шифруємо (будь-які букви чи цифри)
     private final String jwtIssuer = "step.io";   //вказує хто власник цього токена. Можна вписати ім'я свого домена
 
     //метод призначений для того, щоб для визначеного юзера зробити jwt token
