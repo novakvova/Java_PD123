@@ -1,11 +1,11 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
-import { ICategoryEdit } from "./types";
-import http_common from "../../../http_common";
-import { ICategory } from "../list/types";
-import { APP_ENV } from "../../../env";
-import defaultImage from '../../../assets/default-image.jpg';
+import { ICategoryEdit } from "./types.ts";
+import http_common from "../../../../http_common.ts";
+import { ICategory } from "../list/types.ts";
+import { APP_ENV } from "../../../../env";
+import defaultImage from '../../../../assets/default-image.jpg';
 
 const CategoryEditPage = () => {
     const navigate = useNavigate();

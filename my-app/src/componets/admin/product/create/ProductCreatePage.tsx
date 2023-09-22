@@ -1,13 +1,13 @@
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {ICategory} from "../../category/list/types.ts";
-import http_common from "../../../http_common.ts";
+import http_common from "../../../../http_common.ts";
 import {IProductCreate} from "./types.ts";
 import * as yup from "yup";
 import {useFormik} from "formik";
-import InputGroup from "../../common/InputGroup.tsx";
+import InputGroup from "../../../common/InputGroup.tsx";
 import classNames from "classnames";
-import EditorTiny from "../../common/EditorTiny";
+import EditorTiny from "../../../common/EditorTiny";
 
 const ProductCreatePage = () => {
     const navigate = useNavigate();

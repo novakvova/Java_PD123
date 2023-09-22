@@ -1,6 +1,12 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {AuthUserActionType, IAuthUser} from "../../../entities/Auth.ts";
+import http_common from "../../../http_common.ts";
 
 const DefaultHeader = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const {isAuth, user} = useSelector((store: any)=>store.auth as IAuthUser);
     return (
         <>
             <header data-bs-theme="dark">
@@ -24,15 +30,36 @@ const DefaultHeader = () => {
                                     <a className="nav-link disabled" aria-disabled="true">Disabled</a>
                                 </li>
                             </ul>
-                            <ul className={"navbar-nav"}>
-                                <li className="nav-item">
-                                    <Link className="nav-link active" aria-current="page" to="/login">Вхід</Link>
-                                </li>
+                            {isAuth ?(
+                                <ul className={"navbar-nav"}>
+                                    <li className="nav-item">
+                                        <Link className="nav-link active" aria-current="page" to="/profile">
+                                            {user?.email}
+                                        </Link>
+                                    </li>
 
-                                <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page" href="#">Реєстрація</a>
-                                </li>
-                            </ul>
+                                    <li className="nav-item">
+                                        <button className="nav-link active" aria-current="page" onClick={() =>{
+                                            localStorage.removeItem("token");
+                                            http_common.defaults.headers.common["Authorization"]="";
+                                            dispatch({type: AuthUserActionType.LOGOUT_USER});
+                                            navigate("/");
+                                        }}>Вихід</button>
+                                    </li>
+                                </ul>
+                                ) : (
+                                <ul className={"navbar-nav"}>
+                                    <li className="nav-item">
+                                        <Link className="nav-link active" aria-current="page" to="/login">Вхід</Link>
+                                    </li>
+
+                                    <li className="nav-item">
+                                        <Link className="nav-link active" aria-current="page" to="/register">Реєстрація</Link>
+                                    </li>
+                                </ul>
+
+                                )}
+
                         </div>
                     </div>
                 </nav>

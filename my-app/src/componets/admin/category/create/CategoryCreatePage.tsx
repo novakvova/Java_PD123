@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { ICategoryCreate } from "./types";
+import { ICategoryCreate } from "./types.ts";
 import { useFormik } from "formik";
-import http_common from "../../../http_common";
+import http_common from "../../../../http_common.ts";
 import { ChangeEvent } from "react";
-import defaultImage from '../../../assets/default-image.jpg';
+import defaultImage from '../../../../assets/default-image.jpg';
 
 const CategoryCreatePage = () => {
     const navigate = useNavigate();

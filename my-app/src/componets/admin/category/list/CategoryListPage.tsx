@@ -1,15 +1,15 @@
 import {useEffect, useState} from "react";
 import {ICategory} from "./types.ts";
-import http_common from "../../../http_common.ts";
+import http_common from "../../../../http_common.ts";
 import {Link} from "react-router-dom";
-import ModalDelete from "../../common/ModalDelete.tsx";
+import ModalDelete from "../../../common/ModalDelete.tsx";
 
 const CategoryListPage = () => {
 
     const [data, setData] = useState<ICategory[]>([]);
 
     useEffect(() => {
-        http_common.get<ICategory[]>(`/`)
+        http_common.get<ICategory[]>(`/api/category`)
             .then(resp => {
                 setData(resp.data);
             });
