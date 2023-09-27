@@ -57,17 +57,20 @@ public class CategoryController {
     @PutMapping(value = "{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<CategoryItemDTO> updateCategory(@PathVariable int id, @ModelAttribute CategoryUpdateDTO dto) {
         Optional<CategoryEntity> categoryOptional = categoryRepository.findById(id);
-        if (categoryOptional.get().getImage() != null && !dto.getImage().isEmpty()) {
-            storageService.removeFile(categoryOptional.get().getImage());
+        if (categoryOptional.isPresent()) {
+            var cat = categoryOptional.get();
+            if (cat.getImage() != null && dto.getImage()!=null) {
+                storageService.removeFile(categoryOptional.get().getImage());
+                String fileName = storageService.saveMultipartFile(dto.getImage());
+                cat.setImage(fileName);
+            }
+            cat.setName(dto.getName());
+            cat.setDescription(dto.getDescription());
+
+            categoryRepository.save(cat);
+            return ResponseEntity.ok().body(categoryMapper.categoryToItemDTO(cat));
         }
-        String fileName = storageService.saveMultipartFile(dto.getImage());
-        return categoryOptional.map(category -> {
-            category.setName(dto.getName());
-            category.setDescription(dto.getDescription());
-            category.setImage(fileName);
-            categoryRepository.save(category);
-            return ResponseEntity.ok().body(categoryMapper.categoryToItemDTO(category));
-        }).orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("{id}")

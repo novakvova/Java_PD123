@@ -22,12 +22,12 @@ const CategoryEditPage = () => {
     const onFormikSubmit = async (values: ICategoryEdit) => {
         //console.log("Send Formik Data", values);
         try {
-           await http_common.put(`/category/${id}`, values, {
+           await http_common.put(`/api/category/${id}`, values, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             });
-            navigate("../..");
+            navigate("..");
         } catch {
             console.log("Server error");
         }
@@ -41,7 +41,7 @@ const CategoryEditPage = () => {
     const {values, handleChange, handleSubmit, setFieldValue} = formik;
 
     useEffect(() => {
-        http_common.get<ICategory>(`category/${id}`)
+        http_common.get<ICategory>(`/api/category/${id}`)
             .then(resp => {
                 const {data} = resp;
                 setFieldValue("name", data.name);

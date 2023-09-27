@@ -17,7 +17,7 @@ const CategoryListPage = () => {
 
     const onHendlerDelete = async (id: number) => {
         try {
-            await http_common.delete(`category/${id}`);
+            await http_common.delete(`/api/category/${id}`);
             setData(data.filter(x=>x.id!==id));
         }
         catch {
@@ -36,7 +36,7 @@ const CategoryListPage = () => {
             <td>
                 <ModalDelete id={item.id} text={item.name} deleteFunc={onHendlerDelete} />
                 &nbsp;&nbsp;
-                <Link to={`/category/edit/${item.id}`} className="btn btn-info">
+                <Link to={`/admin/category/edit/${item.id}`} className="btn btn-info">
                     Змінить
                 </Link>
             </td>
@@ -45,7 +45,7 @@ const CategoryListPage = () => {
     return (
         <>
             <h1>Список категорій</h1>
-            <Link to="/create" className={"btn btn-success"}>Додати</Link>
+            <Link to="category/create" className={"btn btn-success"}>Додати</Link>
             <table className="table">
                 <thead>
                 <tr>

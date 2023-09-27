@@ -7,6 +7,8 @@ import CategoryEditPage from "./componets/admin/category/edit/CategoryEditPage.t
 import ProductCreatePage from "./componets/admin/product/create/ProductCreatePage.tsx";
 import LoginPage from "./componets/auth/login/LoginPage.tsx";
 import HomePage from "./componets/home/HomePage.tsx";
+import AdminLayout from "./componets/containers/admin/AdminLayout.tsx";
+import AdminHomePage from "./componets/admin/home/AdminHomePage.tsx";
 function App() {
 
 
@@ -18,13 +20,17 @@ function App() {
 
                 <Route path={"login"} element={<LoginPage/>}/>
             </Route>
-            <Route path={"admin"} element={<DefaultLayout/>}>
-                <Route index element={<CategoryListPage />} />
-                <Route path={"create"} element={<CategoryCreatePage />} />
-                <Route path="category/edit/:id" element={<CategoryEditPage />} />
-                <Route path={"product"}>
-                    <Route path="create" element={<ProductCreatePage />} />
+            <Route path={"admin"} element={<AdminLayout/>}>
+                <Route index element={<AdminHomePage />} />
+                <Route path={"category"}>
+                    <Route index element={<CategoryListPage />} />
+                    <Route path={"create"} element={<CategoryCreatePage />} />
+                    <Route path="edit/:id" element={<CategoryEditPage />} />
+                    <Route path={"product"}>
+                        <Route path="create" element={<ProductCreatePage />} />
+                    </Route>
                 </Route>
+
             </Route>
         </Routes>
     </>

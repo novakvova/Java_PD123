@@ -16,7 +16,7 @@ const CategoryCreatePage = () => {
 
     const onFormikSubmit = async (values: ICategoryCreate) => {
         try {
-            await http_common.post(`/category`, values, {
+            await http_common.post(`/api/category`, values, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
