@@ -1,9 +1,9 @@
 import {Dispatch} from "react";
-import {AuthUserActionType, IUser, LoginSuccessAction} from "../../entities/Auth.ts";
+import {AuthUserActionType, IUser, LoginSuccessAction, LogoutUserAction} from "../../entities/Auth.ts";
 import http_common from "../../http_common.ts";
 import jwtDecode from "jwt-decode";
 
-export const LoginUserAction = (dispatch: Dispatch<LoginSuccessAction>, token: string) => {
+export const LoginUser = (dispatch: Dispatch<LoginSuccessAction>, token: string) => {
     http_common.defaults.headers.common["Authorization"]=`Bearer ${token}`;
     localStorage.token = token;
     const user = jwtDecode(token) as IUser;
@@ -15,4 +15,10 @@ export const LoginUserAction = (dispatch: Dispatch<LoginSuccessAction>, token: s
             roles: user.roles
         }
     });
+}
+
+export const LogoutUser = (dispatch: Dispatch<LogoutUserAction>) => {
+    localStorage.removeItem("token");
+    http_common.defaults.headers.common["Authorization"]="";
+    dispatch({type: AuthUserActionType.LOGOUT_USER});
 }

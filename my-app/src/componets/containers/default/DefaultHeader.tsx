@@ -1,12 +1,13 @@
 import {Link, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {AuthUserActionType, IAuthUser} from "../../../entities/Auth.ts";
-import http_common from "../../../http_common.ts";
+import {useDispatch} from "react-redux";
+import {useTypedSelector} from "../../../store/hooks/useTypedSelector.ts";
+import {LogoutUser} from "../../../store/actions/AuthActions.ts";
 
 const DefaultHeader = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {isAuth, user} = useSelector((store: any)=>store.auth as IAuthUser);
+    const {isAuth, user} = useTypedSelector(state => state.auth);
+    const isAdmin = isAuth && user?.roles.includes("admin");
     return (
         <>
             <header data-bs-theme="dark">
@@ -23,9 +24,13 @@ const DefaultHeader = () => {
                                 <li className="nav-item">
                                     <a className="nav-link active" aria-current="page" href="#">Home</a>
                                 </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/admin">Адмін панель</Link>
-                                </li>
+                                { isAdmin ?
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/admin">Адмін панель</Link>
+                                    </li>
+                                    : <></>
+                                }
+
                                 <li className="nav-item">
                                     <a className="nav-link disabled" aria-disabled="true">Disabled</a>
                                 </li>
@@ -40,9 +45,7 @@ const DefaultHeader = () => {
 
                                     <li className="nav-item">
                                         <button className="nav-link active" aria-current="page" onClick={() =>{
-                                            localStorage.removeItem("token");
-                                            http_common.defaults.headers.common["Authorization"]="";
-                                            dispatch({type: AuthUserActionType.LOGOUT_USER});
+                                            LogoutUser(dispatch);
                                             navigate("/");
                                         }}>Вихід</button>
                                     </li>

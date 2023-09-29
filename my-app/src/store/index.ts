@@ -7,6 +7,8 @@ export const rootReducer = combineReducers({
     auth: AuthReducer
 });
 
+export type RootState = ReturnType<typeof rootReducer>;
+
 export const store = configureStore({
     reducer: rootReducer,
     devTools: true,

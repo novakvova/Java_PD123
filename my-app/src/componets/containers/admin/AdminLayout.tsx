@@ -1,12 +1,11 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
 import AdminSidebar from "./AdminSidebar";
-import {IAuthUser} from "../../../entities/Auth.ts";
+import {useTypedSelector} from "../../../store/hooks/useTypedSelector.ts";
 
 const AdminLayout = () => {
-    const { isAuth, user } = useSelector((store: any) => store.auth as IAuthUser);
+    const { isAuth, user } = useTypedSelector(store=> store.auth);
     const navigate = useNavigate();
 
     const isAdmin = isAuth && user?.roles.includes("admin");

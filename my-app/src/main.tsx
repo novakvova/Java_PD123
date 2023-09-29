@@ -8,10 +8,10 @@ import './index.css'
 import {BrowserRouter} from "react-router-dom";
 import {store} from "./store";
 import {Provider} from "react-redux";
-import {LoginUserAction} from "./store/actions/AuthActions.ts";
+import {LoginUser} from "./store/actions/AuthActions.ts";
 
 if(localStorage.token) {
-    LoginUserAction(store.dispatch, localStorage.token);
+    LoginUser(store.dispatch, localStorage.token);
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

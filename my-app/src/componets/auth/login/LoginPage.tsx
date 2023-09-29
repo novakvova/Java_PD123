@@ -5,11 +5,10 @@ import {useNavigate} from "react-router-dom";
 import InputGroup from "../../common/InputGroup.tsx";
 import { ILoginResult } from "../../../entities/Auth.ts";
 import {useDispatch} from "react-redux";
-import {LoginUserAction} from "../../../store/actions/AuthActions.ts";
+import {LoginUser} from "../../../store/actions/AuthActions.ts";
 
 
 const LoginPage = () => {
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const init: ILoginPage = {
@@ -20,7 +19,7 @@ const LoginPage = () => {
     const onFormikSubmit = async (values: ILoginPage) => {
         try {
             const result = await http_common.post<ILoginResult>(`/api/account/login`, values);
-            LoginUserAction(dispatch, result.data.token);
+            LoginUser(dispatch, result.data.token);
             navigate("..");
         }
         catch {
