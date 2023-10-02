@@ -1,0 +1,5 @@
+docker build -t pd123_image .
+docker run -it --rm -p 8052:80 --name pd123_container pd123_image
+
+
+
