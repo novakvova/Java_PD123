@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router-dom";
+// import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {ICategory} from "../../category/list/types.ts";
 import http_common from "../../../../http_common.ts";
@@ -10,7 +10,7 @@ import classNames from "classnames";
 import EditorTiny from "../../../common/EditorTiny";
 
 const ProductCreatePage = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const [categories, setCategories] = useState<ICategory[]>([]);
     useEffect(() =>{

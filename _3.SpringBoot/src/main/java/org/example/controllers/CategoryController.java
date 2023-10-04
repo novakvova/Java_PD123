@@ -35,7 +35,8 @@ public class CategoryController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CategoryEntity create(@ModelAttribute CategoryCreateDTO dto) {
-        var fileName = storageService.saveMultipartFile(dto.getImage());
+        var fileName = storageService.saveThumbnailator(dto.getImage());
+        System.out.println("---Save image is Good "+fileName);
         CategoryEntity cat = CategoryEntity
                 .builder()
                 .name(dto.getName())
@@ -61,7 +62,8 @@ public class CategoryController {
             var cat = categoryOptional.get();
             if (cat.getImage() != null && dto.getImage()!=null) {
                 storageService.removeFile(categoryOptional.get().getImage());
-                String fileName = storageService.saveMultipartFile(dto.getImage());
+
+                String fileName = storageService.saveThumbnailator(dto.getImage());
                 cat.setImage(fileName);
             }
             cat.setName(dto.getName());

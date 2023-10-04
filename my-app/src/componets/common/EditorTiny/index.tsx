@@ -91,7 +91,7 @@ const EditorTiny: FC<IEditorProps> = ({
                             "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
                         //Дає можливість завантажувать фото на серве
                         //Зявляється кнопка обрати фото
-                        file_picker_callback: (cb, value, meta) => {
+                        file_picker_callback: (cb) => {
                             const input = document.createElement("input");
                             input.setAttribute("type", "file");
                             input.setAttribute("accept", "image/*");

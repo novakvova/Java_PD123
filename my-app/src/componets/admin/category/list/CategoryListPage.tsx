@@ -45,7 +45,7 @@ const CategoryListPage = () => {
     return (
         <>
             <h1>Список категорій</h1>
-            <Link to="category/create" className={"btn btn-success"}>Додати</Link>
+            <Link to="/admin/category/create" className={"btn btn-success"}>Додати</Link>
             <table className="table">
                 <thead>
                 <tr>
