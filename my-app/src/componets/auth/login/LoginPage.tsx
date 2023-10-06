@@ -6,24 +6,35 @@ import InputGroup from "../../common/InputGroup.tsx";
 import { ILoginResult } from "../../../entities/Auth.ts";
 import {useDispatch} from "react-redux";
 import {LoginUser} from "../../../store/actions/AuthActions.ts";
+import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
+import {useState} from "react";
 
 
 const LoginPage = () => {
+    const [messageError, setMessageError] = useState<string>();
+    const { executeRecaptcha } = useGoogleReCaptcha();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const init: ILoginPage = {
         email: "",
-        password: ""
+        password: "",
+        recaptchaToken: ""
     };
 
     const onFormikSubmit = async (values: ILoginPage) => {
         try {
+            if(!executeRecaptcha) {
+                alert("Ви бот :(");
+                return;
+            }
+            values.recaptchaToken = await executeRecaptcha();
             const result = await http_common.post<ILoginResult>(`/api/account/login`, values);
             LoginUser(dispatch, result.data.token);
             navigate("..");
         }
         catch {
             console.log("Server error");
+            setMessageError("Дані вказано не вірно");
         }
     }
 
@@ -43,6 +54,13 @@ const LoginPage = () => {
         <>
             <h1 className="text-center">Вхід на сайт</h1>
             <form onSubmit={handleSubmit} className="col-md-6 offset-md-3">
+                {messageError &&
+                <div className="alert alert-danger" role="alert">
+                    {messageError}
+                </div>
+                }
+
+
                 <InputGroup
                     label="Назва"
                     field="email"
