@@ -8,6 +8,8 @@ import {useDispatch} from "react-redux";
 import {LoginUser} from "../../../store/actions/AuthActions.ts";
 import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
 import {useState} from "react";
+import GoogleAuth from "../GoogleAuth";
+import {GoogleOAuthProvider} from "@react-oauth/google";
 
 
 const LoginPage = () => {
@@ -80,6 +82,10 @@ const LoginPage = () => {
                     error={errors.password}
                     touched={touched.password}
                 />
+
+                <GoogleOAuthProvider clientId={"677018736139-cqtkjj1u88g5ccr0h7bjnl1qb1lbhqif.apps.googleusercontent.com"}>
+                    <GoogleAuth/>
+                </GoogleOAuthProvider>
 
                 <button type="submit" className="btn btn-primary">
                     Вхід

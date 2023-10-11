@@ -1,0 +1,4 @@
+Client ID
+677018736139-cqtkjj1u88g5ccr0h7bjnl1qb1lbhqif.apps.googleusercontent.com
+Secret Key
+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
