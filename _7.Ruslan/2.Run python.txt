@@ -1,9 +1,0 @@
-python main.py
-
-pip --version
-
-apt install python3-pip
-
-pip --version
-
-pip install 

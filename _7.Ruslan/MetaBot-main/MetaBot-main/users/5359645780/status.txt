@@ -1,1 +1,0 @@
-{"do": "none", "count_img": false, "effect_level": "none", "speed": "none"}
